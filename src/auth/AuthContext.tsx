@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { API_BASE_URL, ENDPOINTS } from "../api/endpoints";
+import { ENDPOINTS } from "../api/endpoints";
 
 interface UserInfo {
   id: string;
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (!refreshToken) throw new Error("Нет refresh_token");
 
     const response = await fetch(
-      `${API_BASE_URL}${ENDPOINTS.AUTH.REFRESH}`,
+      `${ENDPOINTS.AUTH.REFRESH}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -106,7 +106,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = async (username: string, password: string) => {
     const response = await fetch(
-      `${API_BASE_URL}${ENDPOINTS.AUTH.LOGIN}`,
+      `${ENDPOINTS.AUTH.LOGIN}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -123,7 +123,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const loadUser = async (token: string) => {
     const response = await fetch(
-      `${API_BASE_URL}${ENDPOINTS.AUTH.ME}`,
+      `${ENDPOINTS.AUTH.ME}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }

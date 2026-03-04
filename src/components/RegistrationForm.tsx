@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { ENDPOINTS } from "../api/endpoints";
 import {
   TextField,
   Button,
@@ -45,13 +46,13 @@ function RegistrationForm() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     setMessage(null);
 
     try {
       const response = await fetch(
-        "http://localhost:8000/v1/auth/register",
+        ENDPOINTS.AUTH.REGISTER,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
