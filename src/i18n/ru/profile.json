@@ -1,0 +1,11 @@
+{
+  "profile_title": "Профиль пользователя",
+  "loading_message": "Загрузка данных пользователя...",
+  "username_label": "Имя пользователя",
+  "email_label": "Email",
+  "first_name_label": "Имя",
+  "last_name_label": "Фамилия",
+  "roles_label": "Роли",
+  "logout_button": "Выйти",
+  "welcome_message": "Добро пожаловать, {{username}}!"
+}

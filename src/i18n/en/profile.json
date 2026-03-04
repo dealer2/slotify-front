@@ -1,0 +1,11 @@
+{
+  "profile_title": "User Profile",
+  "loading_message": "Loading user data...",
+  "username_label": "Username",
+  "email_label": "Email",
+  "first_name_label": "First Name",
+  "last_name_label": "Last Name",
+  "roles_label": "Roles",
+  "logout_button": "Logout",
+  "welcome_message": "Welcome, {{username}}!"
+}
