@@ -24,7 +24,6 @@ import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 
 interface RegistrationData {
-  username: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -41,7 +40,6 @@ function RegistrationForm() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<RegistrationData>({
-    username: "",
     email: "",
     firstName: "",
     lastName: "",
@@ -95,7 +93,6 @@ function RegistrationForm() {
   };
 
   return (
-    <>
       <SignInContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
           <Typography
@@ -123,24 +120,7 @@ function RegistrationForm() {
               gap: 2,
             }}
           >
-            <FormControl>
-              <StyledFormLabel htmlFor="username">
-                {t("username")}
-              </StyledFormLabel>
-              <StyledTextField
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                placeholder={t("username_placeholder")}
-                autoComplete="username"
-                autoFocus
-                required
-                fullWidth
-                variant="outlined"
-                color="primary"
-              />
-            </FormControl>
-
+            
             <FormControl>
               <StyledFormLabel htmlFor="email">{t("email")}</StyledFormLabel>
               <StyledTextField
@@ -190,6 +170,7 @@ function RegistrationForm() {
                 color="primary"
               />
             </FormControl>
+
             <FormControlLabel
               control={
                 <StyledCheckbox
@@ -232,11 +213,10 @@ function RegistrationForm() {
           </Box>
         </Card>
       </SignInContainer>
-    </>
   );
 }
 
-const Card = styled(MuiCard)(({ theme }) => ({
+export const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   alignSelf: "center",
@@ -255,7 +235,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
   }),
 }));
 
-const SignInContainer = styled(Stack)(({ theme }) => ({
+export const SignInContainer = styled(Stack)(({ theme }) => ({
   minHeight: "100dvh",
   padding: theme.spacing(2),
   [theme.breakpoints.up("sm")]: {
@@ -277,9 +257,8 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
-const StyledFormLabel = styled(FormLabel)(({ theme }) => ({
-  ...theme.typography.caption,
-  marginBottom: 8,
+export const StyledFormLabel = styled(FormLabel)(({ theme }) => ({
+  ...theme.typography.caption
 }));
 
 const gray = {
@@ -335,7 +314,7 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const StyledButton = styled(Button)(({ theme }) => ({
+export const StyledButton = styled(Button)(({ theme }) => ({
   ...(theme.palette.mode === "light" && {
     color: "white",
     backgroundColor: gray[900],
@@ -386,7 +365,7 @@ const brand = {
   900: "hsl(210, 100%, 21%)",
 };
 
-const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
+export const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
   margin: 10,
   height: 16,
   width: 16,
