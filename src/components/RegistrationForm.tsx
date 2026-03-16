@@ -47,6 +47,7 @@ function RegistrationForm() {
 
   const [message, setMessage] = useState<string | null>(null);
   const [openModal, setOpenModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleClickOpen = () => {
     setOpenModal(true);
@@ -67,6 +68,13 @@ function RegistrationForm() {
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     setMessage(null);
+    setLoading(true);
+
+  if (!formData.email || !formData.firstName || !formData.lastName) {
+    setMessage(t("fill_all_fields"));
+    setLoading(false);
+    return;
+  }
 
     try {
       const response = await fetch(ENDPOINTS.AUTH.REGISTER, {
@@ -79,6 +87,7 @@ function RegistrationForm() {
 
       if (response.ok) {
         navigate("/login", { state: { registered: true } });
+        return;
       } else {
         const errorMessage =
           data.errorMessage ||
@@ -89,7 +98,9 @@ function RegistrationForm() {
     } catch (error: any) {
       console.error("Ошибка:", error);
       setMessage(error?.message || t("network_error"));
-    }
+    } finally {
+    setLoading(false);
+  }
   };
 
   return (
@@ -124,8 +135,11 @@ function RegistrationForm() {
             <FormControl>
               <StyledFormLabel htmlFor="email">{t("email")}</StyledFormLabel>
               <StyledTextField
+                id="email"
                 type="email"
                 name="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder={t("email_placeholder")}
                 autoComplete="email"
                 autoFocus
@@ -140,16 +154,15 @@ function RegistrationForm() {
                 {t("first_name")}
               </StyledFormLabel>
               <StyledTextField
+                id="firstName"
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
                 placeholder={t("first_name_placeholder")}
-                autoComplete="username"
-                autoFocus
+                autoComplete="given-name"                
                 required
                 fullWidth
-                variant="outlined"
-                color="primary"
+                variant="outlined"                
               />
             </FormControl>
 
@@ -158,16 +171,15 @@ function RegistrationForm() {
                 {t("last_name")}
               </StyledFormLabel>
               <StyledTextField
+                id="lastName"
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
                 placeholder={t("last_name_placeholder")}
-                autoComplete="username"
-                autoFocus
+                autoComplete="family-name"                
                 required
                 fullWidth
-                variant="outlined"
-                color="primary"
+                variant="outlined"                
               />
             </FormControl>
 
@@ -186,8 +198,7 @@ function RegistrationForm() {
                   checkedIcon={
                     <CheckRoundedIcon sx={{ height: 14, width: 14 }} />
                   }
-                  value="remember"
-                  color="primary"
+                  value="remember"                  
                 />
               }
               label={t("check_label")}
@@ -195,9 +206,9 @@ function RegistrationForm() {
             <ForgotPassword open={openModal} handleClose={handleClose} />
             <StyledButton
               type="submit"
-              variant="contained"
-              color="primary"
+              variant="contained"              
               fullWidth
+              disabled={loading}
             >
               {t("register_button")}
             </StyledButton>
@@ -370,7 +381,7 @@ export const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
   height: 16,
   width: 16,
   borderRadius: 5,
-  border: "1px solid ",
+  border: "1px solid",
   borderColor: alpha(gray[300], 0.8),
   boxShadow: "0 0 0 1.5px hsla(210, 0%, 0%, 0.04) inset",
   backgroundColor: alpha(gray[100], 0.4),
