@@ -1,8 +1,5 @@
 {
   "cancel_button": "Cancel",
-  "continue_button": "Continue",
-  "reset_password_title": "Reset password",
-  "reset_password_text": "Enter your account's email address, and we'll send you a link to reset your password.",
-  "reset_email_sent": "Password reset email sent",
-  "email_placeholder": "Email address"
+  "submit_button": "Submit"
+ 
 }

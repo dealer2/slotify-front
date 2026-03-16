@@ -1,8 +1,4 @@
 {
   "cancel_button": "Отмена",
-  "continue_button": "Продолжить",
-  "reset_password_title": "Сброс пароля",
-  "reset_password_text": "Введите адрес электронной почты вашей учетной записи, и мы отправим вам ссылку для сброса пароля.",
-  "reset_email_sent": "Письмо для сброса пароля отправлено",
-  "email_placeholder": "Электронная почта"
+  "submit_button": "Подтвердить"
 }

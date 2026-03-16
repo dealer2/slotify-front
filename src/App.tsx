@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./auth/AuthContext";
-import RegistrationForm from "./components/RegistrationForm";
-import Login from "./components/Login";
-import Profile from "./components/Profile";
+import RegistrationForm from "./features/auth/components/RegisterForm";
+import LoginForm from "./features/auth/components/LoginForm";
+import Profile from "./features/core/components/Profile";
 import { ProtectedRoute } from "./auth/ProtectedRoute";
-import LangSwitcher from "./components/LangSwitcher"; // импорт переключателя языка
+import LangSwitcher from "./features/common/LangSwitcher"; // импорт переключателя языка
 import { useMemo, useState } from "react";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-import ThemeSwitcher from "./components/ThemeSwitcher";
+import ThemeSwitcher from "./features/common/ThemeSwitcher";
 
 function App() {
   const [mode, setMode] = useState<"light" | "dark">("light");
@@ -36,7 +36,7 @@ function App() {
 
           <Routes>
             <Route path="/" element={<RegistrationForm />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<LoginForm />} />
             <Route
               path="/profile"
               element={

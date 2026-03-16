@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../auth/AuthContext";
+import { useAuth } from "../../../auth/AuthContext";
 import { useTranslation } from "react-i18next";
 import { Box, Typography, Alert, FormControl, Link } from "@mui/material";
 import {
@@ -8,13 +8,13 @@ import {
   StyledButton,
   StyledFormLabel,
   StyledTextField,
-} from "./RegistrationForm";
-import ForgotPassword from "./ForgotPassword";
+} from "./RegisterForm";
+import ForgotPassword from "./ForgotPasswordForm";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
 
-const Login = () => {
+const LoginForm = () => {
   const { t } = useTranslation("auth");
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const Login = () => {
   };
 
   const validationSchema = Yup.object({
-    email: Yup.string().email(t("invalid_email")).required(t("email_required")),
+    email: Yup.string().email(t("auth.login.invalid_email")).required(t("auth.login.email_required")),
     password: Yup.string()
       .min(6, t("password_too_short"))
       .required(t("password_required")),
@@ -44,7 +44,7 @@ const Login = () => {
           variant="h4"
           sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
         >
-          {t("login_title")}
+          {t("auth.login.title")}
         </Typography>
 
         {error && (
@@ -66,7 +66,7 @@ const Login = () => {
               await login(values.email, values.password);
               navigate("/profile");
             } catch (err: any) {
-              setError(err.message || t("login_error"));
+              setError(err?.message || t("auth.login.http_error_description"));
             }
 
             setSubmitting(false);
@@ -92,14 +92,14 @@ const Login = () => {
               }}
             >
               <FormControl>
-                <StyledFormLabel htmlFor="email">{t("email")}</StyledFormLabel>
+                <StyledFormLabel htmlFor="email">{t("auth.login.email")}</StyledFormLabel>
 
                 <StyledTextField
                   name="email"
                   type="email"
                   value={values.email}
                   onChange={handleChange}
-                  placeholder={t("email_placeholder")}
+                  placeholder={t("auth.login.email_placeholder")}
                   fullWidth
                   autoComplete="username"
                   error={touched.email && Boolean(errors.email)}
@@ -109,7 +109,7 @@ const Login = () => {
 
               <FormControl>
                 <StyledFormLabel htmlFor="password">
-                  {t("password")}
+                  {t("auth.login.password")}
                 </StyledFormLabel>
 
                 <StyledTextField
@@ -117,7 +117,7 @@ const Login = () => {
                   type="password"
                   value={values.password}
                   onChange={handleChange}
-                  placeholder={t("password_placeholder")}
+                  placeholder={t("auth.login.password_placeholder")}
                   fullWidth
                   autoComplete="current-password"
                   error={touched.password && Boolean(errors.password)}
@@ -131,7 +131,7 @@ const Login = () => {
                 fullWidth
                 disabled={isSubmitting}
               >
-                {t("login_button")}
+                {t("auth.login.login_button")}
               </StyledButton>
               <Link
                 component="button"
@@ -140,7 +140,7 @@ const Login = () => {
                 variant="body2"
                 sx={{ alignSelf: "center" }}
               >
-                {t("forgot_password")}
+                {t("auth.login.forgot_password_title")}
               </Link>
             </Box>
           )}
@@ -150,4 +150,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginForm;

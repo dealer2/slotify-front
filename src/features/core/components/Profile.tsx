@@ -1,4 +1,4 @@
-import { useAuth } from "../auth/AuthContext";
+import { useAuth } from "../../../auth/AuthContext";
 import { useTranslation } from "react-i18next";
 import { Box, Typography, Button } from "@mui/material";
 
