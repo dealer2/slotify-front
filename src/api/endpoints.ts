@@ -7,8 +7,11 @@ export const ENDPOINTS = {
     ME: `${API_BASE_URL}/v1/auth/me`,
     REGISTER: `${API_BASE_URL}/v1/auth/register`,    
   },
-   USER: {    
+  USER: {    
     USERS: `${API_BASE_URL}/v1/users`,
     RESET_PASSWORD: `${API_BASE_URL}/v1/email/users/{id}/send-reset-password-email`,
+  },
+  TENANT: {    
+    COMPANIES: `${API_BASE_URL}/v1/api/companies`
   },
 };

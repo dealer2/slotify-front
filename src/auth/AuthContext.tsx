@@ -9,6 +9,7 @@ interface UserInfo {
   email: string;
   realmRoles: string[];
   created_at: string;
+  attributes?: Record<string, string[]>;
 }
 
 interface LoginResponse {

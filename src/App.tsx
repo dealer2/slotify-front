@@ -2,7 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./auth/AuthContext";
 import RegistrationForm from "./features/auth/components/RegisterForm";
 import LoginForm from "./features/auth/components/LoginForm";
-import Profile from "./features/core/components/Profile";
+//import Profile from "./features/core/components/Profile";
+import ProfilePage from "./features/core/pages/ProfilePage";
 import { ProtectedRoute } from "./auth/ProtectedRoute";
 import LangSwitcher from "./features/common/LangSwitcher"; // импорт переключателя языка
 import { useMemo, useState } from "react";
@@ -41,7 +42,7 @@ function App() {
               path="/profile"
               element={
                 <ProtectedRoute>
-                  <Profile />
+                  <ProfilePage />
                 </ProtectedRoute>
               }
             />
