@@ -12,43 +12,46 @@ interface CompanyData {
 }
 
 interface CompanyFormProps {
-  company: Partial<CompanyData>;           // текущие данные компании
-  onSave: (data: CompanyData) => void;     // callback для сохранения
+  company: Partial<CompanyData>;
+  onSave: (data: CompanyData) => void;
+  userEmail: string; // ✅ добавлено
 }
 
-const CompanyForm = ({ company, onSave }: CompanyFormProps) => {
+// ✅ функция для инициализации (избегаем дублирования)
+const buildFormData = (company: Partial<CompanyData>): CompanyData => ({
+  name: company.name || "",
+  slug: company.slug || "",
+  logoUrl: company.logoUrl || "",
+  email: "", // ❌ не используем
+  phone: company.phone || "",
+  timezone: company.timezone || "UTC",
+});
+
+const CompanyForm = ({ company, onSave, userEmail }: CompanyFormProps) => {
   const { t } = useTranslation("profile");
-  const [formData, setFormData] = useState<CompanyData>({
-    name: company.name || "",
-    slug: company.slug || "",
-    logoUrl: company.logoUrl || "",
-    email: company.email || "",
-    phone: company.phone || "",
-    timezone: company.timezone || "UTC",
-  });
+
+  const [formData, setFormData] = useState<CompanyData>(() =>
+    buildFormData(company)
+  );
 
   useEffect(() => {
-    setFormData({
-      name: company.name || "",
-      slug: company.slug || "",
-      logoUrl: company.logoUrl || "",
-      email: company.email || "",
-      phone: company.phone || "",
-      timezone: company.timezone || "UTC",
-    });
+    setFormData(buildFormData(company));
   }, [company]);
 
   const handleChange = (field: keyof CompanyData, value: string) => {
-    setFormData((prev: CompanyData) => ({ ...prev, [field]: value }));
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   const handleSubmit = () => {
-    onSave(formData);
+    // ✅ email берём из user, а не из формы
+    onSave({ ...formData, email: userEmail });
   };
 
   return (
-    <Box sx={{ mt: 4 }}>
-      <Typography variant="h6">{t("company_form_title", "Company Information")}</Typography>
+    <Box sx={{ mt: 2, mb: 4, p: 2, border: "1px solid #ddd", borderRadius: 2 }}>
+      <Typography variant="h6" gutterBottom>
+        {t("company_form_title", "Company Information")}
+      </Typography>
 
       <TextField
         fullWidth
@@ -74,12 +77,13 @@ const CompanyForm = ({ company, onSave }: CompanyFormProps) => {
         onChange={e => handleChange("logoUrl", e.target.value)}
       />
 
+      {/* ✅ email readonly из user */}
       <TextField
         fullWidth
         margin="normal"
         label={t("company_email_label", "Email")}
-        value={formData.email}
-        onChange={e => handleChange("email", e.target.value)}
+        value={userEmail}
+        slotProps={{ input: { readOnly: true } }}
       />
 
       <TextField
@@ -98,7 +102,7 @@ const CompanyForm = ({ company, onSave }: CompanyFormProps) => {
         onChange={e => handleChange("timezone", e.target.value)}
       />
 
-      <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={handleSubmit}>
+      <Button variant="contained" sx={{ mt: 2 }} onClick={handleSubmit}>
         {t("save_button", "Save")}
       </Button>
     </Box>

@@ -31,7 +31,7 @@ const OwnerForm = ({ owner }: OwnerFormProps) => {
         margin="normal"
         label="User ID"
         value={owner.id}
-        InputProps={{ readOnly: true }}
+        slotProps={{ input: { readOnly: true } }}
       />
 
       <TextField
@@ -39,7 +39,7 @@ const OwnerForm = ({ owner }: OwnerFormProps) => {
         margin="normal"
         label="Tenant ID"
         value={tenantId}
-        InputProps={{ readOnly: true }}
+        slotProps={{ input: { readOnly: true } }}
       />
 
       <TextField
@@ -47,7 +47,7 @@ const OwnerForm = ({ owner }: OwnerFormProps) => {
         margin="normal"
         label={t("username_label", "Username")}
         value={owner.username}
-        InputProps={{ readOnly: true }}
+        slotProps={{ input: { readOnly: true } }}
       />
 
       <TextField
@@ -55,7 +55,7 @@ const OwnerForm = ({ owner }: OwnerFormProps) => {
         margin="normal"
         label={t("email_label", "Email")}
         value={owner.email}
-        InputProps={{ readOnly: true }}
+        slotProps={{ input: { readOnly: true } }}
       />
 
       <TextField
@@ -63,7 +63,7 @@ const OwnerForm = ({ owner }: OwnerFormProps) => {
         margin="normal"
         label={t("first_name_label", "First Name")}
         value={owner.firstName}
-        InputProps={{ readOnly: true }}
+        slotProps={{ input: { readOnly: true } }}
       />
 
       <TextField
@@ -71,7 +71,7 @@ const OwnerForm = ({ owner }: OwnerFormProps) => {
         margin="normal"
         label={t("last_name_label", "Last Name")}
         value={owner.lastName}
-        InputProps={{ readOnly: true }}
+        slotProps={{ input: { readOnly: true } }}
       />
 
       <TextField
@@ -79,7 +79,7 @@ const OwnerForm = ({ owner }: OwnerFormProps) => {
         margin="normal"
         label={t("roles_label", "Roles")}
         value={owner.realmRoles.join(", ")}
-        InputProps={{ readOnly: true }}
+        slotProps={{ input: { readOnly: true } }}
       />
     </Box>
   );
