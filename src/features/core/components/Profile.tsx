@@ -33,7 +33,12 @@ const Profile = () => {
         <strong>{t("roles_label")}:</strong> {user.realmRoles.join(", ")}
       </Typography>
 
-      <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={logout}>
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{ mt: 2 }}
+        onClick={logout}
+      >
         {t("logout_button")}
       </Button>
     </Box>
