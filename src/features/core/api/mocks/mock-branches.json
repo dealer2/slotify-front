@@ -1,0 +1,29 @@
+{"branches": [
+        {
+            "id": "4c2f2c83-3dac-417c-aca9-2a513d52d400",
+            "name": "Main Office 5",
+            "phone": "+1234567890",
+            "email": "branch@example.com",
+            "address": "333 Main St",
+            "city": "New Deli",
+            "postalCode": "10001",
+            "countryId": 51,
+            "latitude": 40.712776,
+            "longitude": -74.005974,
+            "active": true           
+        },
+        {
+            "id": "03c4b128-f6b2-4af9-ac14-a5022b8a2e1d",
+            "name": "Main Office 6",
+            "phone": "+1234567890",
+            "email": "branch2@example.com",
+            "address": "333 Main St",
+            "city": "New Deli",
+            "postalCode": "10001",
+            "countryId": 51,
+            "latitude": 40.712776,
+            "longitude": -74.005974,
+            "active": true            
+        }
+    ]
+}

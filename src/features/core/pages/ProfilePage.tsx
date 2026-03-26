@@ -6,20 +6,18 @@ import OwnerForm from "../components/OwnerForm";
 import CompanyForm from "../components/CompanyForm";
 
 import * as realApi from "../api/companyApi";      
-import * as mockApi from "../api/companyMockApi";  
+import * as mockApi from "../api/mockCompanyApi";  
 
-import type { CompanyData } from "../api/companyApi";
+import type { CompanyDto } from "../api/companyApi";
 
 const ProfilePage = () => {
   const { user, authFetch } = useAuth();
   const { t } = useTranslation("profile");
 
-  const [company, setCompany] = useState<Partial<CompanyData>>({});
+  const [company, setCompany] = useState<Partial<CompanyDto>>({}); // всегда объект
   const [loading, setLoading] = useState(true);
 
   const useMock = import.meta.env.VITE_USE_MOCK === "true";
-  console.log("useMock = " + useMock);
-
   const api = useMock ? mockApi : realApi;
 
   useEffect(() => {
@@ -31,7 +29,7 @@ const ProfilePage = () => {
         if (!tenantId) return;
 
         const data = await api.getCompany(authFetch, tenantId);
-        if (data) setCompany(data);
+        if (data) setCompany(data ?? {}); // защита от null
       } catch (err) {
         console.error(err);
       } finally {
@@ -42,17 +40,16 @@ const ProfilePage = () => {
     fetchCompany();
   }, [user, authFetch, api]);
 
-  const handleSaveCompany = async (data: CompanyData) => {
+  const handleSaveCompany = async (data: CompanyDto) => {
     try {
       const updated = await api.saveCompany(authFetch, data);
-      setCompany(updated);
+      setCompany(updated ?? {}); // защита от null
     } catch (err) {
       console.error(err);
     }
   };
 
-  if (!user) return <Typography>{t("loading_message")}</Typography>;
-  if (loading) return <Typography>{t("loading_message")}</Typography>;
+  if (!user || loading) return <Typography>{t("loading_message")}</Typography>;
 
   return (
     <Box sx={{ maxWidth: 900, margin: "0 auto", padding: 2 }}>
@@ -64,7 +61,6 @@ const ProfilePage = () => {
         Mode: {useMock ? "Mock API" : "Real API"}
       </Typography>
 
-      {/* Flex-контейнер для форм */}
       <Box
         sx={{
           display: "flex",
@@ -88,7 +84,7 @@ const ProfilePage = () => {
 
         <Box sx={{ flex: 2 }}>
           <CompanyForm
-            company={company}
+            company={company ?? {}} // всегда объект
             onSave={handleSaveCompany}
             userEmail={user.email || ""}
           />

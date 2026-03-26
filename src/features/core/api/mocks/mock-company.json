@@ -4,5 +4,6 @@
   "logoUrl": "/mock-company",
   "email": "mock@mail.com",
   "phone": "+423953206010",
-  "timezone": "UTC"
+  "timezone": "UTC",
+  "active": true
 }
