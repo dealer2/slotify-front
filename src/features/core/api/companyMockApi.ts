@@ -1,16 +1,10 @@
 import type { CompanyData } from "./companyApi";
+import mockCompanyJson from "./mocks/mock-company.json"; // импорт JSON
 
-// имитация задержки
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-let mockCompany: CompanyData = {
-  name: "Mock Company",
-  slug: "mock-company",
-  logoUrl: "/mock-company",
-  email: "mock@mail.com",
-  phone: "+423953206010",
-  timezone: "UTC",
-};
+// Используем локальную переменную для хранения изменений
+let mockCompany: CompanyData = mockCompanyJson as CompanyData;
 
 /**
  * ✅ сигнатура как в real API

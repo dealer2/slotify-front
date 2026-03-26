@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../../auth/AuthContext";
 import { useTranslation } from "react-i18next";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import OwnerForm from "../components/OwnerForm";
 import CompanyForm from "../components/CompanyForm";
 
@@ -11,17 +11,15 @@ import * as mockApi from "../api/companyMockApi";
 import type { CompanyData } from "../api/companyApi";
 
 const ProfilePage = () => {
-  const { user, logout, authFetch } = useAuth();
+  const { user, authFetch } = useAuth();
   const { t } = useTranslation("profile");
 
   const [company, setCompany] = useState<Partial<CompanyData>>({});
   const [loading, setLoading] = useState(true);
 
-  // ✅ читаем env прямо на странице
   const useMock = import.meta.env.VITE_USE_MOCK === "true";
   console.log("useMock = " + useMock);
 
-  // ✅ выбираем API локально
   const api = useMock ? mockApi : realApi;
 
   useEffect(() => {
@@ -57,7 +55,7 @@ const ProfilePage = () => {
   if (loading) return <Typography>{t("loading_message")}</Typography>;
 
   return (
-    <Box sx={{ maxWidth: 600, margin: "0 auto", padding: 2 }}>
+    <Box sx={{ maxWidth: 900, margin: "0 auto", padding: 2 }}>
       <Typography variant="h5" gutterBottom>
         {t("profile_title")}
       </Typography>
@@ -66,32 +64,36 @@ const ProfilePage = () => {
         Mode: {useMock ? "Mock API" : "Real API"}
       </Typography>
 
-      <OwnerForm
-        owner={{
-          id: user.id,
-          username: user.username,
-          email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          realmRoles: user.realmRoles || [],
-          attributes: user.attributes,
+      {/* Flex-контейнер для форм */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          gap: 2,
         }}
-      />
-
-      <CompanyForm
-        company={company}
-        onSave={handleSaveCompany}
-        userEmail={user.email || ""}
-      />
-
-      <Button
-        variant="contained"
-        color="primary"
-        sx={{ mt: 2 }}
-        onClick={logout}
       >
-        {t("logout_button")}
-      </Button>
+        <Box sx={{ flex: 1 }}>
+          <OwnerForm
+            owner={{
+              id: user.id,
+              username: user.username,
+              email: user.email,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              realmRoles: user.realmRoles || [],
+              attributes: user.attributes,
+            }}
+          />
+        </Box>
+
+        <Box sx={{ flex: 2 }}>
+          <CompanyForm
+            company={company}
+            onSave={handleSaveCompany}
+            userEmail={user.email || ""}
+          />
+        </Box>
+      </Box>
     </Box>
   );
 };
