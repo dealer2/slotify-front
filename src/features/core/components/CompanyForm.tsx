@@ -2,19 +2,21 @@ import { useState, useEffect } from "react";
 import { Box, TextField, Button, Typography, FormControlLabel, Switch } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import type { CompanyDto } from "../api/companyApi";
+import type { Company } from "../api/types";
 
 interface CompanyFormProps {
-  company: Partial<CompanyDto>;
-  onSave: (data: CompanyDto) => void;
+  company: Partial<Company>;
+  onSave: (data: Company) => void;
   userEmail: string;
 }
 
-const buildFormData = (company: Partial<CompanyDto> = {}): CompanyDto => ({
+// Инициализация формы
+const buildFormData = (company: Partial<Company>): Company => ({
+  id: company.id || "",
   name: company.name || "",
   slug: company.slug || "",
   logoUrl: company.logoUrl || "",
-  email: "", // email берём из user
+  email: "", // будет подставлен из user
   phone: company.phone || "",
   timezone: company.timezone || "UTC",
   active: company.active ?? true,
@@ -23,17 +25,18 @@ const buildFormData = (company: Partial<CompanyDto> = {}): CompanyDto => ({
 const CompanyForm = ({ company, onSave, userEmail }: CompanyFormProps) => {
   const { t } = useTranslation("profile");
 
-  const [formData, setFormData] = useState<CompanyDto>(buildFormData(company));
+  const [formData, setFormData] = useState<Company>(() => buildFormData(company));
 
   useEffect(() => {
     setFormData(buildFormData(company));
   }, [company]);
 
-  const handleChange = (field: keyof CompanyDto, value: string | boolean) => {
+  const handleChange = (field: keyof Company, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   const handleSubmit = () => {
+    // email берём из user
     onSave({ ...formData, email: userEmail });
   };
 
@@ -67,6 +70,7 @@ const CompanyForm = ({ company, onSave, userEmail }: CompanyFormProps) => {
         onChange={e => handleChange("logoUrl", e.target.value)}
       />
 
+      {/* email readonly из user */}
       <TextField
         fullWidth
         margin="normal"
@@ -91,16 +95,15 @@ const CompanyForm = ({ company, onSave, userEmail }: CompanyFormProps) => {
         onChange={e => handleChange("timezone", e.target.value)}
       />
 
+      {/* active */}
       <FormControlLabel
         control={
           <Switch
             checked={formData.active}
             onChange={e => handleChange("active", e.target.checked)}
-            color="primary"
           />
         }
         label={t("company_active_label", "Active")}
-        sx={{ mt: 1 }}
       />
 
       <Button variant="contained" sx={{ mt: 2 }} onClick={handleSubmit}>

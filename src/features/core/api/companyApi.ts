@@ -9,8 +9,7 @@ export interface CompanyDto {
   logoUrl: string;
   email: string;
   phone: string;
-  timezone: string;
-  active?: boolean;
+  timezone: string;  
 }
 
 /**

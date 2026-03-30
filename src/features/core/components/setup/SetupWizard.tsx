@@ -3,7 +3,7 @@ import { Box, Button, Stepper, Step, StepLabel, Typography } from "@mui/material
 import { useTranslation } from "react-i18next";
 
 import CompanyForm from "../CompanyForm";
-import BranchesForm from "../BranchesForm";
+import BranchesForm from "../BranchForm";
 import EmployeesForm from "../EmployeesForm";
 
 const steps = ["Company Profile", "Branches", "Employees"];
