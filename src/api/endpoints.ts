@@ -12,6 +12,7 @@ export const ENDPOINTS = {
     RESET_PASSWORD: `${API_BASE_URL}/v1/email/users/{id}/send-reset-password-email`,
   },
   TENANT: {    
-    COMPANIES: `${API_BASE_URL}/v1/api/companies`
+    COMPANIES: `${API_BASE_URL}/v1/api/companies`,
+    BRANCHES_BY_COMPANY_ID: `${API_BASE_URL}/v1/api/branches/company/{companyId}`
   },
 };

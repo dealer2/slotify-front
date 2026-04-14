@@ -6,50 +6,51 @@ import LoginForm from "./features/auth/components/LoginForm";
 import ProfilePage from "./features/core/pages/ProfilePage";
 import { ProtectedRoute } from "./auth/ProtectedRoute";
 import LangSwitcher from "./features/common/LangSwitcher"; // импорт переключателя языка
-import { useMemo, useState } from "react";
-import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import ThemeSwitcher from "./features/common/ThemeSwitcher";
+import { Layout } from "./features/core/components/slotify-ui/src/layout/Layout";
+import { AuthLayout } from "./features/core/components/slotify-ui/src/layout/AuthLayout";
+import { AppThemeProvider } from "./AppThemeProvider";
 
 function App() {
-  const [mode, setMode] = useState<"light" | "dark">("light");
-
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode],
-  );
-
-  const toggleTheme = () => {
-    setMode((prev) => (prev === "light" ? "dark" : "light"));
-  };
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline enableColorScheme />
+      <AppThemeProvider>
       <AuthProvider>
         <BrowserRouter>
           {/* Переключатель языка виден на всех страницах */}
           <LangSwitcher />
-           <ThemeSwitcher toggleTheme={toggleTheme} mode={mode} />
+          <ThemeSwitcher  />
 
           <Routes>
-            <Route path="/" element={<RegistrationForm />} />
-            <Route path="/login" element={<LoginForm />} />
+            <Route
+              path="/"
+              element={
+                <AuthLayout>
+                  <RegistrationForm />
+                </AuthLayout>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <AuthLayout>
+                  <LoginForm />
+                </AuthLayout>
+              }
+            />
             <Route
               path="/profile"
               element={
                 <ProtectedRoute>
-                  <ProfilePage />
+                  <Layout>
+                    <ProfilePage />
+                  </Layout>
                 </ProtectedRoute>
               }
             />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
-    </ThemeProvider>
+    </AppThemeProvider>
   );
 }
 
